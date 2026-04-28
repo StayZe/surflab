@@ -1,0 +1,10 @@
+fastapi==0.110.0
+uvicorn==0.27.1
+sqlalchemy==2.0.27
+psycopg[binary]  # Driver moderne, remplace psycopg2-binary
+celery==5.3.6
+redis==5.0.1
+docker==7.1.0
+pydantic==2.6.3
+pydantic-settings==2.2.1
+python-dotenv==1.0.1

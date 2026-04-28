@@ -1,0 +1,10 @@
+# Fichier : docker/Dockerfile.mock
+# Faux serveur ultra-léger pour tester l'API sur Mac
+
+FROM alpine:latest
+
+# On installe un petit outil réseau
+RUN apk add --no-cache netcat-openbsd
+
+# Quand le conteneur démarre, il affiche un message et tourne à l'infini
+CMD ["sh", "-c", "echo '🚀 Faux Serveur CS2 démarré sur le port $CS2_PORT' && sleep infinity"]

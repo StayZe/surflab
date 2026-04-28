@@ -1,0 +1,20 @@
+FROM --platform=linux/amd64 cm2network/steamcmd:root
+
+# On installe les librairies nécessaires pour CS2
+RUN apt-get update && apt-get install -y libicu-dev libsqlite3-0 libnet1 curl && rm -rf /var/lib/apt/lists/*
+
+USER steam
+WORKDIR /home/steam/steamcmd
+
+# On ne fait PLUS le RUN steamcmd ici. 
+# On le fera au démarrage du conteneur.
+
+WORKDIR /home/steam/cs2-dedicated/game/bin/linuxsteamrt64
+
+# Script de démarrage qui installe/met à jour puis lance
+CMD sh -c '/home/steam/steamcmd/steamcmd.sh +force_install_dir /home/steam/cs2-dedicated +login anonymous +app_update 730 validate +quit && \
+    if [ -n "$CS2_WORKSHOP_ID" ]; then \
+      ./cs2 -dedicated -port $CS2_PORT +host_workshop_map $CS2_WORKSHOP_ID -authkey $STEAM_API_KEY +sv_lan 1; \
+    else \
+      ./cs2 -dedicated -port $CS2_PORT +map $CS2_MAP +sv_lan 1; \
+    fi'
